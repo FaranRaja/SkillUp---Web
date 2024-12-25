@@ -3,7 +3,7 @@
 import { BottomNav } from "@/components/bottom-nav"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Bell, Camera, ChevronRight, Menu, Send } from 'lucide-react'
+import { Bell, Menu, Send } from 'lucide-react'
 import { useState } from "react"
 import { SideMenu } from "@/components/side-menu"
 import { ProfilePhoto } from "@/components/profile-photo"

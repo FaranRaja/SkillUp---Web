@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { supabase } from "@/lib/supabase"
 import { useAuth } from "@/context/auth-context"
@@ -18,11 +18,11 @@ export function ProfilePhoto() {
     if (user?.id) {
       fetchProfilePhoto()
     }
-  }, [user?.id])
+  }, [user?.id, fetchProfilePhoto])
 
-  const fetchProfilePhoto = async () => {
+  const fetchProfilePhoto = useCallback(async () => {
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('profiles')
         .select('photo_url')
         .eq('id', user?.id)
@@ -34,7 +34,7 @@ export function ProfilePhoto() {
     } catch (error) {
       console.error('Error fetching photo:', error)
     }
-  }
+  }, [user?.id])
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
