@@ -5,7 +5,6 @@ import { Settings, User, LogOut, Book, Star, History, HelpCircle } from "lucide-
 import { useAuth } from "@/context/auth-context"
 import { useEffect, useState, useCallback } from "react"
 import { supabase } from "@/lib/supabase"
-import Image from 'next/image'
 
 export function SideMenu({ isOpen, onClose }: { 
   isOpen: boolean
