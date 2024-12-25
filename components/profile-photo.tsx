@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button"
 import { supabase } from "@/lib/supabase"
 import { useAuth } from "@/context/auth-context"
 import { X } from "lucide-react"
-import Image from 'next/image'
-import type { PostgrestError } from '@supabase/supabase-js'
 
 export function ProfilePhoto() {
   const { user } = useAuth()
@@ -105,14 +103,11 @@ export function ProfilePhoto() {
         className="w-8 h-8 rounded-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         {photoUrl ? (
-          <div className="relative w-8 h-8">
-            <Image 
-              src={photoUrl} 
-              alt="Profile" 
-              fill
-              className="object-cover"
-            />
-          </div>
+          <img 
+            src={photoUrl} 
+            alt="Profile" 
+            className="w-full h-full object-cover"
+          />
         ) : (
           <div className="w-full h-full bg-gray-300" />
         )}
@@ -134,11 +129,10 @@ export function ProfilePhoto() {
             <div className="flex flex-col items-center gap-4">
               <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-blue-100">
                 {photoUrl ? (
-                  <Image 
+                  <img 
                     src={photoUrl} 
                     alt="Profile" 
-                    fill
-                    className="object-cover"
+                    className="w-full h-full object-cover"
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-300" />

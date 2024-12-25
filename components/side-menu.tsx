@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { Settings, User, LogOut, Book, Star, History, HelpCircle } from "lucide-react"
 import { useAuth } from "@/context/auth-context"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { supabase } from "@/lib/supabase"
+import Image from 'next/image'
 
 export function SideMenu({ isOpen, onClose }: { 
   isOpen: boolean
@@ -16,15 +17,9 @@ export function SideMenu({ isOpen, onClose }: {
     ? user.email.split('@')[0].replace(/[0-9]/g, '') 
     : 'User'
 
-  useEffect(() => {
-    if (user?.id) {
-      fetchProfilePhoto()
-    }
-  }, [user?.id])
-
-  const fetchProfilePhoto = async () => {
+  const fetchProfilePhoto = useCallback(async () => {
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('profiles')
         .select('photo_url')
         .eq('id', user?.id)
@@ -33,10 +28,16 @@ export function SideMenu({ isOpen, onClose }: {
       if (data?.photo_url) {
         setPhotoUrl(data.photo_url)
       }
-    } catch (error) {
-      console.error('Error fetching photo:', error)
+    } catch (err) {
+      console.error('Error fetching photo:', err)
     }
-  }
+  }, [user?.id])
+
+  useEffect(() => {
+    if (user?.id) {
+      fetchProfilePhoto()
+    }
+  }, [user?.id, fetchProfilePhoto])
 
   const menuItems = [
     { icon: <User className="w-5 h-5" />, label: "Profile", href: "/profile" },
