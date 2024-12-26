@@ -20,22 +20,25 @@ export default function SearchPage() {
     setLoading(true)
     try {
       const response = await fetch(
-        "https://api-inference.huggingface.co/models/google/flan-t5-large",
+        "https://api.cohere.ai/v1/generate",
         {
           method: "POST",
           headers: {
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer UhmIa7qoC3MG0yIlgMeHJ8g7TIw1Tc0QCe8CT4Ip",
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            inputs: question,
-            options: { wait_for_model: true }
-          }),
+            prompt: question,
+            max_tokens: 300,
+            temperature: 0.7,
+            model: 'command',
+            return_likelihoods: 'NONE'
+          })
         }
       )
 
       const result = await response.json()
-      setAnswer(result[0].generated_text)
+      setAnswer(result.generations[0].text)
     } catch (error) {
       console.error("Error:", error)
       setAnswer("Sorry, I couldn't process your question. Please try again.")
@@ -66,7 +69,7 @@ export default function SearchPage() {
       <main className="max-w-4xl mx-auto p-4 space-y-6">
         <div className="space-y-2">
           <p className="text-lg">
-            Ask me anything or choose from popular topics below.
+            SkillUp Assistant
           </p>
           <div className="flex gap-2">
             <Input 
